@@ -10,7 +10,7 @@ import com.yjx.yupicturebackend.common.ResultUtils;
 import com.yjx.yupicturebackend.constant.UserConstant;
 import com.yjx.yupicturebackend.exception.ErrorCode;
 import com.yjx.yupicturebackend.exception.ThrowUtils;
-import com.yjx.yupicturebackend.model.dto.*;
+import com.yjx.yupicturebackend.model.dto.user.*;
 import com.yjx.yupicturebackend.model.entity.User;
 import com.yjx.yupicturebackend.model.vo.LoginUserVO;
 import com.yjx.yupicturebackend.model.vo.UserVO;

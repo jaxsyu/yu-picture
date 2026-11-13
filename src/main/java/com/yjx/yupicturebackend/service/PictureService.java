@@ -1,0 +1,90 @@
+package com.yjx.yupicturebackend.service;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.yjx.yupicturebackend.model.dto.picture.PictureQueryRequest;
+import com.yjx.yupicturebackend.model.dto.picture.PictureReviewRequest;
+import com.yjx.yupicturebackend.model.dto.picture.PictureUploadByBatchRequest;
+import com.yjx.yupicturebackend.model.dto.picture.PictureUploadRequest;
+import com.yjx.yupicturebackend.model.entity.Picture;
+import com.yjx.yupicturebackend.model.entity.User;
+import com.yjx.yupicturebackend.model.vo.PictureVO;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author yu
+ * @description 针对表【picture(图片)】的数据库操作Service
+ * @createDate 2026-03-26 08:28:16
+ */
+public interface PictureService extends IService<Picture> {
+
+    /**
+     * 上传图片
+     *
+     * @param inputSource
+     * @param pictureUploadRequest
+     * @param loginUser
+     * @return
+     */
+    PictureVO uploadPicture(Object inputSource, PictureUploadRequest pictureUploadRequest,
+                            User loginUser);
+
+    /**
+     * 获取图片查询条件
+     *
+     * @param pictureQueryRequest
+     * @return
+     */
+    QueryWrapper<Picture> getQueryWrapper(PictureQueryRequest pictureQueryRequest);
+
+    /**
+     * 获取图片封装类并关联创建用户信息
+     *
+     * @param picture
+     * @return
+     */
+    PictureVO getPictureVO(Picture picture);
+
+    /**
+     * 分页获取图片封装并关联用户信息
+     *
+     * @param picturePage
+     * @return
+     */
+    Page<PictureVO> getPictureVOPage(Page<Picture> picturePage);
+
+    /**
+     * 用于更新或修改图片时的校验图片方法
+     *
+     * @param picture
+     */
+    void validPicture(Picture picture);
+
+    /**
+     * 图片审核
+     *
+     * @param pictureReviewRequest
+     * @param loginUser
+     */
+    void doPictureReview(PictureReviewRequest pictureReviewRequest, User loginUser);
+
+    /**
+     * 填充审核参数
+     *
+     * @param picture
+     * @param loginUser
+     */
+    void fillReviewParams(Picture picture, User loginUser);
+
+    /**
+     * 批量抓取和创建图片
+     *
+     * @param pictureUploadByBatchRequest
+     * @param loginUser
+     * @return 成功创建的图片数量
+     */
+    int uploadPictureByBatch(PictureUploadByBatchRequest pictureUploadByBatchRequest, User loginUser);
+}

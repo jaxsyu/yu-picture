@@ -1,8 +1,8 @@
 package com.yjx.yupicturebackend.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.yjx.yupicturebackend.model.dto.UserQueryRequest;
-import com.yjx.yupicturebackend.model.dto.UserRegisterRequest;
+import com.yjx.yupicturebackend.model.dto.user.UserQueryRequest;
+import com.yjx.yupicturebackend.model.dto.user.UserRegisterRequest;
 import com.yjx.yupicturebackend.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yjx.yupicturebackend.model.vo.LoginUserVO;
@@ -85,10 +85,18 @@ public interface UserService extends IService<User> {
     List<UserVO> getUserVOList(List<User> userList);
 
     /**
-     * 获取查询请求(分页)
+     * 获取查询条件(分页)
      *
      * @param userQueryRequest
      * @return
      */
     QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
+
+    /**
+     * 是否为管理员
+     *
+     * @param user
+     * @return
+     */
+    boolean isAdmin(User user);
 }

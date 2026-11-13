@@ -1,4 +1,4 @@
-package com.yjx.yupicturebackend.model.dto;
+package com.yjx.yupicturebackend.model.dto.user;
 
 import com.yjx.yupicturebackend.common.PageRequest;
 import lombok.Data;

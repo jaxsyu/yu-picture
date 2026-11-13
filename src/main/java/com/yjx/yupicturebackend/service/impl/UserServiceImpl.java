@@ -9,8 +9,8 @@ import com.yjx.yupicturebackend.constant.UserConstant;
 import com.yjx.yupicturebackend.exception.BusinessException;
 import com.yjx.yupicturebackend.exception.ErrorCode;
 import com.yjx.yupicturebackend.exception.ThrowUtils;
-import com.yjx.yupicturebackend.model.dto.UserQueryRequest;
-import com.yjx.yupicturebackend.model.dto.UserRegisterRequest;
+import com.yjx.yupicturebackend.model.dto.user.UserQueryRequest;
+import com.yjx.yupicturebackend.model.dto.user.UserRegisterRequest;
 import com.yjx.yupicturebackend.model.entity.User;
 import com.yjx.yupicturebackend.model.vo.LoginUserVO;
 import com.yjx.yupicturebackend.model.vo.UserVO;
@@ -23,7 +23,6 @@ import org.springframework.util.DigestUtils;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -169,5 +168,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         queryWrapper.like(StrUtil.isNotBlank(userProfile), "userProfile", userProfile);
         queryWrapper.orderBy(StrUtil.isNotBlank(sortField), sortOrder.equals("ascend"), sortField);
         return queryWrapper;
+    }
+
+    @Override
+    public boolean isAdmin(User user) {
+        return user != null && user.getUserRole().equals(UserConstant.ADMIN_ROLE);
     }
 }
