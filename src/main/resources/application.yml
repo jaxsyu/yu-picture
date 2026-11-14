@@ -2,6 +2,10 @@ server:
   port: 8123
   servlet:
     context-path: /api
+    # 30 天过期
+    session:
+      cookie:
+        max-age: 2592000
 spring:
   application:
     name: yu-picture-backend
@@ -10,9 +14,20 @@ spring:
     url: jdbc:mysql://localhost:3306/yu_picture
     username: root
     password: 521203.yu
+  # Redis 配置
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
   servlet:
     multipart:
       max-file-size: 10MB
+  session:
+    store-type: redis
+    timeout: 2592000
+#  profiles:
+#    active: local
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
