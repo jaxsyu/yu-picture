@@ -10,6 +10,7 @@
         <result property="spaceId" column="spaceId"/>
         <result property="thumbnailUrl" column="thumbnailUrl"/>
         <result property="name" column="name"/>
+        <result property="picColor" column="picColor"/>
         <result property="introduction" column="introduction"/>
         <result property="category" column="category"/>
         <result property="tags" column="tags"/>
@@ -26,7 +27,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,thumbnailUrl,spaceId
+        id
+        ,thumbnailUrl,spaceId,picColor
         ,url,name,introduction,category,tags,
         picSize,picWidth,picHeight,picScale,picFormat,
         userId,createTime,editTime,updateTime,isDelete
