@@ -24,10 +24,10 @@ public class AliYunAiApi {
     private String apiKey;
 
     // 创建任务地址
-    public static final String CREATE_OUT_PAINTING_TASK_URL = "https://dashscope.aliyuncs.com/api/v1/services/aigc/image2image/out-painting";
+    public static final String CREATE_OUT_PAINTING_TASK_URL = "https://llm-9vfk93rznut3dgqb.cn-beijing.maas.aliyuncs.com/api/v1/services/aigc/image2image/image-synthesis";
 
     // 查询任务状态
-    public static final String GET_OUT_PAINTING_TASK_URL = "https://dashscope.aliyuncs.com/api/v1/tasks/%s";
+    public static final String GET_OUT_PAINTING_TASK_URL = "https://llm-9vfk93rznut3dgqb.cn-beijing.maas.aliyuncs.com/api/v1/tasks/%s";
 
     /**
      * 创建任务

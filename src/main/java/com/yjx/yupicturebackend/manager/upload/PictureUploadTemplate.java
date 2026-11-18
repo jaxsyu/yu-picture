@@ -113,14 +113,14 @@ public abstract class PictureUploadTemplate {
         int picHeight = compressedCiObject.getHeight();
         double picScale = NumberUtil.round(picWidth * 1.0 / picHeight, 2).doubleValue();
         UploadPictureResult uploadPictureResult = new UploadPictureResult();
-        uploadPictureResult.setUrl(compressedCiObject.getLocation());
+        uploadPictureResult.setUrl("https://" + compressedCiObject.getLocation());
         uploadPictureResult.setName(FileUtil.mainName(originalFilename));
         uploadPictureResult.setPicSize(compressedCiObject.getSize().longValue());
         uploadPictureResult.setPicWidth(picWidth);
         uploadPictureResult.setPicHeight(picHeight);
         uploadPictureResult.setPicScale(picScale);
         uploadPictureResult.setPicFormat(compressedCiObject.getFormat());
-        uploadPictureResult.setThumbnailUrl(thumbnailCiObject.getLocation());
+        uploadPictureResult.setThumbnailUrl("https://" + thumbnailCiObject.getLocation());
         uploadPictureResult.setPicColor(imageInfo.getAve());
         return uploadPictureResult;
     }
@@ -134,7 +134,7 @@ public abstract class PictureUploadTemplate {
         int picHeight = imageInfo.getHeight();
         double picScale = NumberUtil.round(picWidth * 1.0 / picHeight, 2).doubleValue();
         UploadPictureResult uploadPictureResult = new UploadPictureResult();
-        uploadPictureResult.setUrl(putObjectResult.getCiUploadResult().getOriginalInfo().getLocation());
+        uploadPictureResult.setUrl("https://" + putObjectResult.getCiUploadResult().getOriginalInfo().getLocation());
         uploadPictureResult.setName(FileUtil.mainName(originalFilename));
         uploadPictureResult.setPicSize(FileUtil.size(file));
         uploadPictureResult.setPicWidth(picWidth);

@@ -605,7 +605,7 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture>
         // 构造请求参数
         CreateOutPaintingTaskRequest taskRequest = new CreateOutPaintingTaskRequest();
         CreateOutPaintingTaskRequest.Input input = new CreateOutPaintingTaskRequest.Input();
-        input.setImageUrl(picture.getUrl());
+        input.setBaseImageUrl(picture.getUrl());
         taskRequest.setInput(input);
         BeanUtil.copyProperties(createPictureOutPaintingTaskRequest, taskRequest);
         // 创建任务
