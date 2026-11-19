@@ -47,7 +47,7 @@ public abstract class PictureUploadTemplate {
         // 自己拼接上传路径，而不是使用原始文件名，增强安全性
         String suffix = StrUtil.blankToDefault(FileUtil.getSuffix(originalFilename), "jpg");// 解决 URL 上传无法预览问题
         String uploadFilename = String.format("%s_%s.%s", DateUtil.formatDate(new Date()), uuid, suffix);
-        String uploadPath = String.format("/%s/%s", uploadPathPrefix, uploadFilename);
+        String uploadPath = String.format("%s/%s", uploadPathPrefix, uploadFilename);
         // 上传文件并解析
         File file = null;
         try {

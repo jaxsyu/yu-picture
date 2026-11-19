@@ -78,7 +78,9 @@ public class CosManager {
         String originalKey = key;
         if (key.contains("http")){
             String host = cosClientConfig.getHost();
-            originalKey = key.replace(host, "");
+            // 对象的key不允许以正斜线/或者反斜线\开头。
+            // 例如：在对象的访问地址examplebucket-1250000000.cos.ap-guangzhou.myqcloud.com/folder/picture.jpg 中，对象键为folder/picture.jpg。
+            originalKey = key.replace("https://" + host + "/", "");
         }
         cosClient.deleteObject(cosClientConfig.getBucket(), originalKey);
     }
