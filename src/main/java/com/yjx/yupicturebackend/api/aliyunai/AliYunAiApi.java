@@ -78,7 +78,12 @@ public class AliYunAiApi {
             if (!httpResponse.isOk()) {
                 throw new BusinessException(ErrorCode.OPERATION_ERROR, "获取任务失败");
             }
-            return JSONUtil.toBean(httpResponse.body(), GetOutPaintingTaskResponse.class);
+            GetOutPaintingTaskResponse outPaintingTaskResponse = JSONUtil.toBean(httpResponse.body(), GetOutPaintingTaskResponse.class);
+            String code = outPaintingTaskResponse.getOutput().getCode();
+            if (StrUtil.isNotBlank(code)){
+                log.info("扩图失败，错误类型：" + code + "，详情：" + outPaintingTaskResponse.getOutput().getMessage());
+            }
+            return outPaintingTaskResponse;
         }
     }
 

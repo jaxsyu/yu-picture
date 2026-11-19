@@ -83,26 +83,6 @@ public class GetOutPaintingTaskResponse {
          */
         private List<Result> results;
 
-
-        /**
-         * 任务指标信息
-         */
-        @Alias("task_metrics")
-        private TaskMetrics taskMetrics;
-    }
-
-    /**
-     * 表示单条输出结果
-     * <p>成功项：url 有值；失败项：code、message 有值</p>
-     */
-    @Data
-    public static class Result {
-
-        /**
-         * 生成图像的 URL（成功时返回）
-         */
-        private String url;
-
         /**
          * 错误码（该条结果执行失败时返回）
          */
@@ -113,12 +93,28 @@ public class GetOutPaintingTaskResponse {
          */
         private String message;
 
+
         /**
-         * 判断该条结果是否成功
+         * 任务指标信息
          */
-        public boolean isSuccess() {
-            return url != null && !url.isEmpty();
-        }
+        @Alias("task_metrics")
+        private TaskMetrics taskMetrics;
+    }
+
+    /**
+     * 表示单条输出结果
+     * <p>成功：url 有值；失败：不返回result</p>，一次针对多条图片执行时，Result 的数据结构会有变化，
+     * 详情查看文档：https://docs.bailian.console.aliyun.com/zh/model-studio/wanx-image-edit-api-reference
+     * 此处仅针对单挑数据
+     */
+    @Data
+    public static class Result {
+
+        /**
+         * 生成图像的 URL（成功时返回）
+         */
+        private String url;
+
     }
 
     /**
@@ -147,7 +143,7 @@ public class GetOutPaintingTaskResponse {
     }
 
     /**
-     * 表示用量信息
+     * 表示用量信息(成功才返回)
      */
     @Data
     public static class Usage {
