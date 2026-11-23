@@ -7,6 +7,33 @@ server:
       cookie:
         max-age: 2592000
 spring:
+  # 空间图片分表
+  shardingsphere:
+    datasource:
+      names: yu_picture
+      yu_picture:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/yu_picture
+        username: root
+        password: 521203.yu
+    rules:
+      sharding:
+        tables:
+          picture:
+            actual-data-nodes: yu_picture.picture  # 动态分表
+            table-strategy:
+              standard:
+                sharding-column: spaceId
+                sharding-algorithm-name: picture_sharding_algorithm  # 使用自定义分片算法
+        sharding-algorithms:
+          picture_sharding_algorithm:
+            type: CLASS_BASED
+            props:
+              strategy: standard
+              algorithmClassName: com.yjx.yupicturebackend.manager.sharding.PictureShardingAlgorithm
+    props:
+      sql-show: true
   application:
     name: yu-picture-backend
   datasource:
@@ -38,6 +65,7 @@ mybatis-plus:
       logic-delete-field: isDelete # 全局逻辑删除字段名(isDelete为实体类属性名称)
       logic-delete-value: 1 # 逻辑已删除值。可选，默认值为 1
       logic-not-delete-value: 0 # 逻辑未删除值。可选，默认值为 0
+    enable-sql-runner: true
 # 接口文档配置
 knife4j:
   enable: true

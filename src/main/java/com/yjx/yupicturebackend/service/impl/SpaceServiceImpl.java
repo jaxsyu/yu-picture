@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yjx.yupicturebackend.exception.BusinessException;
 import com.yjx.yupicturebackend.exception.ErrorCode;
 import com.yjx.yupicturebackend.exception.ThrowUtils;
+import com.yjx.yupicturebackend.manager.sharding.DynamicShardingManager;
 import com.yjx.yupicturebackend.model.dto.space.SpaceAddRequest;
 import com.yjx.yupicturebackend.model.dto.space.SpaceQueryRequest;
 import com.yjx.yupicturebackend.model.entity.Space;
@@ -24,6 +25,7 @@ import com.yjx.yupicturebackend.service.SpaceService;
 import com.yjx.yupicturebackend.mapper.SpaceMapper;
 import com.yjx.yupicturebackend.service.SpaceUserService;
 import com.yjx.yupicturebackend.service.UserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -53,6 +55,11 @@ public class SpaceServiceImpl extends ServiceImpl<SpaceMapper, Space>
     @Resource
     private SpaceUserService spaceUserService;
 
+    // 为方便部署，注释掉分表
+//    @Resource
+//    @Lazy
+//    private DynamicShardingManager dynamicShardingManager;
+
     @Override
     public long addSpace(SpaceAddRequest spaceAddRequest, User loginUser) {
         Space space = new Space();
@@ -73,7 +80,7 @@ public class SpaceServiceImpl extends ServiceImpl<SpaceMapper, Space>
         // 数据校验
         this.validSpace(space, true);
         // 权限校验
-        if (SpaceLevelEnum.COMMON.getValue() != spaceAddRequest.getSpaceLevel() && userService.isAdmin(loginUser)){
+        if (SpaceLevelEnum.COMMON.getValue() != spaceAddRequest.getSpaceLevel() && !userService.isAdmin(loginUser)){
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "无权限创建该级别空间");
         }
         // 针对用户上锁
@@ -98,6 +105,8 @@ public class SpaceServiceImpl extends ServiceImpl<SpaceMapper, Space>
                     boolean result1 = spaceUserService.save(spaceUser);
                     ThrowUtils.throwIf(!result1, ErrorCode.OPERATION_ERROR, "创建团队空间默认成员失败");
                 }
+//                // 创建分表
+//                dynamicShardingManager.createSpacePictureTable(space);
                 return space.getId();
             });
             return Optional.ofNullable(newSpaceId).orElse(-1L);
