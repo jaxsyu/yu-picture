@@ -25,7 +25,7 @@ public interface SpaceService extends IService<Space> {
     long addSpace(SpaceAddRequest spaceAddRequest, User loginUser);
 
     /**
-     * 用于更新或修改空间时的校验空间方法
+     * 校验空间
      *
      * @param space
      * @param add   判断是创建还是编辑

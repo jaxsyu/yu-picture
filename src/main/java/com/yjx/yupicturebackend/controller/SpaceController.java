@@ -11,6 +11,7 @@ import com.yjx.yupicturebackend.constant.UserConstant;
 import com.yjx.yupicturebackend.exception.BusinessException;
 import com.yjx.yupicturebackend.exception.ErrorCode;
 import com.yjx.yupicturebackend.exception.ThrowUtils;
+import com.yjx.yupicturebackend.manager.auth.SpaceUserAuthManager;
 import com.yjx.yupicturebackend.model.dto.space.*;
 import com.yjx.yupicturebackend.model.entity.Space;
 import com.yjx.yupicturebackend.model.entity.User;
@@ -38,6 +39,9 @@ public class SpaceController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private SpaceUserAuthManager spaceUserAuthManager;
 
     @PostMapping("/add")
     public BaseResponse<Long> addSpace(@RequestBody SpaceAddRequest spaceAddRequest, HttpServletRequest request){
@@ -139,11 +143,15 @@ public class SpaceController {
      * get spaceVO by id
      */
     @GetMapping("/get/vo")
-    public BaseResponse<SpaceVO> getSpaceVOById(long id) {
+    public BaseResponse<SpaceVO> getSpaceVOById(long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         Space space = spaceService.getById(id);
         ThrowUtils.throwIf(space == null, ErrorCode.NOT_FOUND_ERROR);
-        return ResultUtils.success(spaceService.getSpaceVO(space));
+        SpaceVO spaceVO = spaceService.getSpaceVO(space);
+        User loginUser = userService.getLoginUser(request);
+        List<String> permissionList = spaceUserAuthManager.getPermissionList(space, loginUser);
+        spaceVO.setPermissionList(permissionList);
+        return ResultUtils.success(spaceVO);
     }
 
     /**
