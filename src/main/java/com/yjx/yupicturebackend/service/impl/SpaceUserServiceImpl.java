@@ -85,9 +85,9 @@ public class SpaceUserServiceImpl extends ServiceImpl<SpaceUserMapper, SpaceUser
         Long spaceId = spaceUserQueryRequest.getSpaceId();
         String spaceRole = spaceUserQueryRequest.getSpaceRole();
         queryWrapper.eq(id != null, "id", id)
-                .eq(userId != null, "user_id", userId)
-                .eq(spaceId != null, "space_id", spaceId)
-                .eq(spaceRole != null, "space_role", spaceRole);
+                .eq(userId != null, "userId", userId)
+                .eq(spaceId != null, "spaceId", spaceId)
+                .eq(spaceRole != null, "spaceRole", spaceRole);
         return queryWrapper;
     }
 

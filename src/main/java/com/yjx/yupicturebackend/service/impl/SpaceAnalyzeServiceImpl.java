@@ -105,14 +105,14 @@ public class SpaceAnalyzeServiceImpl extends ServiceImpl<SpaceMapper, Space>
         QueryWrapper<Picture> queryWrapper = new QueryWrapper<>();
         fillAnalyzeQueryWrapper(spaceCategoryAnalyzeRequest, queryWrapper);
         // 使用 Mybatis-plus 的分组查询功能，按 category 分组统计数量和大小
-        queryWrapper.select("category AS category", "COUNT(*) AS count", "SUM(picSize) AS) totalSize")
+        queryWrapper.select("category AS category", "COUNT(*) AS count", "SUM(picSize) AS totalSize")
                 .groupBy("category");
         return pictureService.getBaseMapper().selectMaps(queryWrapper)
                 .stream()
                 .map(result -> {
                     String category = (String) result.get("category");
-                    Long count = (Long) result.get("count");
-                    Long totalSize = (Long) result.get("totalSize");
+                    Long count = ((Number) result.get("count")).longValue();
+                    Long totalSize = ((Number) result.get("totalSize")).longValue();
                     return new SpaceCategoryAnalyzeResponse(category, count, totalSize);
                 })
                 .toList();
@@ -214,7 +214,7 @@ public class SpaceAnalyzeServiceImpl extends ServiceImpl<SpaceMapper, Space>
         QueryWrapper<Space> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("id", "spaceName", "userId", "totalSize")
                 .orderByDesc("totalSize")
-                .last("LIMIT" + spaceRankAnalyzeRequest.getTopN());
+                .last("LIMIT " + spaceRankAnalyzeRequest.getTopN());
         return spaceService.list(queryWrapper);
     }
 
