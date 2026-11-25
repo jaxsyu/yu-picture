@@ -18,9 +18,7 @@ import com.yjx.yupicturebackend.service.PictureService;
 import com.yjx.yupicturebackend.service.SpaceAnalyzeService;
 import com.yjx.yupicturebackend.service.SpaceService;
 import com.yjx.yupicturebackend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.util.LinkedHashMap;
